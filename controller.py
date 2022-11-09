@@ -6,3 +6,6 @@ def run():
     if start == 1:
         show = model.show_all()
         print(show)
+    if start == 2:
+        surname = view.find_by_surname()
+        model.find_by_surname(surname)

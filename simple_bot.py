@@ -28,7 +28,8 @@ dispatcher = updater.dispatcher
 
 
 def start(update, context):
-    context.bot.send_message(update.effective_chat.id, f"Привет! Это телефонный справочник\n Выберите: \n Показать всех /show_all \n")
+    context.bot.send_message(update.effective_chat.id, f"Привет! Это телефонный справочник\n Выберите: \n Показать всех /show_all \n\
+ Найти по фамилии /find_by_surname\n Добавить запись /add_record\n Удалить запись /delete_record")
 
 def show_all(update, context):
     context.bot.send_message(update.effective_chat.id, '{}'.format(model.show_all()))
@@ -45,7 +46,7 @@ def stop(update, context):
 
 
 
-convert_handler = ConversationHandler(
+show_all_handler = ConversationHandler(
         
         
         entry_points=[CommandHandler('show_all', show_all)],
@@ -64,7 +65,7 @@ start_handler = CommandHandler('start', start)
 
 
 dispatcher.add_handler(start_handler)
-dispatcher.add_handler(convert_handler)
+dispatcher.add_handler(show_all_handler)
 
 updater.start_polling()
 updater.idle()

@@ -14,3 +14,10 @@ def show_all():
     results3 = '\n'.join(results2)
     print(type(results3))
     return results3
+
+def find_by_surname(surname):
+    conn = sqlite3.connect('phonebook.db')
+    cursor = conn.cursor()
+    cursor.execute(f"select * from phonebook where surname like '%{surname}%'")
+    results = cursor.fetchall()
+    print(results)
