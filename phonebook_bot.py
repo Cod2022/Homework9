@@ -1,3 +1,4 @@
+# Телеграм-бот телефонный справочник
 
 from telegram import Bot, Update, ParseMode
 from telegram.ext import CommandHandler, MessageHandler, Updater, ConversationHandler, Filters
@@ -10,21 +11,6 @@ bot_token = '5544320586:AAFaJ_z5clFBK6vVeUwpR0suqBeUOj84G8g'
 bot = Bot(bot_token)
 updater = Updater(bot_token, use_context=True)
 dispatcher = updater.dispatcher
-
-# pip install python-telegram-bot==13.14
-# Updater → Dispatсher → Handlers → start → wait_for_the_end
-# Updater - взаимодействие между клиентом и сервером
-# Dispatсher - отвечает за вызов обработчика сообщений
-# Handlers - обработчики сообщений
-
-# def show_all():
-#     conn = sqlite3.connect('phonebook.db')
-#     cursor = conn.cursor()
-#     cursor.execute("select * from phonebook")
-#     results = cursor.fetchall()
-#     for i in results:
-#         print(i)
-#     return results
 
 
 def start(update, context):
