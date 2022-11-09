@@ -10,4 +10,6 @@ def run():
         surname = view.find_by_surname()
         model.find_by_surname(surname)
     if start == 3:
-        model.add_recording(id, surname, name, petronimic, phone_number)
+        values = view.add_record()
+        model.add_record(values)
+        

@@ -23,17 +23,23 @@ def find_by_surname(surname):
     print(results)
     return results
 
-def add_recording(id, surname, name, petronimic, phone_number):
+# def add_recording_list(values):
+#     conn = sqlite3.connect('phonebook.db')
+#     cursor = conn.cursor()
+#     cursor.execute(
+#         f"insert into phonebook (id, surname, name, petronimic, phone_number) "
+#         f"values ('{values[0]}', '{values[1]}', '{values[2]}','{values[3]}', '{values[4]}')")
+#     conn.commit()
+
+def add_record(string):
+    values = string.split()
     conn = sqlite3.connect('phonebook.db')
     cursor = conn.cursor()
-    id = input('Введите номер записи: ')
-    name = input('Введите имя: ')
-    surname = input('Введите фамилию: ')
-    petronimic = input('Введите отчество: ')
-    phone_number = input('Введите номер телефона: ')
     cursor.execute(
         f"insert into phonebook (id, surname, name, petronimic, phone_number) "
-        f"values ('{id}', '{surname}', '{name}','{petronimic}', '{phone_number}')")
+        f"values ('{values[0]}', '{values[1]}', '{values[2]}','{values[3]}', '{values[4]}')")
     conn.commit()
+
+
 
 

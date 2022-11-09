@@ -41,6 +41,12 @@ def find_by_surname(update, context):
 def find_by_surname_output(update, context):
     update.message.reply_text('{}'.format(model.find_by_surname(update.message.text)), ParseMode.MARKDOWN)
     
+def add_record(update, context):
+    context.bot.send_message(update.effective_chat.id, 'Введите номер записи(id), фамилию, имя, отчество, номер телефона: ')
+    return 1
+
+def add_record_output(update, context):
+    update.message.reply_text(f'Добавлена запись: {update.message.text}', model.add_record(update.message.text))
 
 
 
@@ -72,6 +78,17 @@ find_by_surname_handler = ConversationHandler(
         fallbacks=[CommandHandler('stop', stop)]
     )
 
+add_record_handler = ConversationHandler(
+        
+        
+        entry_points=[CommandHandler('add_record', add_record)],
+        states={
+            1: [MessageHandler(Filters.text & ~Filters.command, add_record_output)],
+            
+        },
+        fallbacks=[CommandHandler('stop', stop)]
+    )
+
 
 
 
@@ -82,6 +99,7 @@ start_handler = CommandHandler('start', start)
 dispatcher.add_handler(start_handler)
 dispatcher.add_handler(show_all_handler)
 dispatcher.add_handler(find_by_surname_handler)
+dispatcher.add_handler(add_record_handler)
 
 updater.start_polling()
 updater.idle()
