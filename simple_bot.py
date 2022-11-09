@@ -28,8 +28,8 @@ dispatcher = updater.dispatcher
 
 
 def start(update, context):
-    context.bot.send_message(update.effective_chat.id, f"Привет! Это телефонный справочник\n Выберите: \n Показать всех /show_all \n\
- Найти по фамилии /find_by_surname\n Добавить запись /add_record\n Удалить запись /delete_record")
+    context.bot.send_message(update.effective_chat.id, f"Привет! Это телефонный справочник\n Выберите: \n Показать всех /show \n\
+ Найти по фамилии /find \n Добавить запись /add \n Удалить запись /delete")
 
 def show_all(update, context):
     context.bot.send_message(update.effective_chat.id, '{}'.format(model.show_all()))
@@ -42,11 +42,18 @@ def find_by_surname_output(update, context):
     update.message.reply_text('{}'.format(model.find_by_surname(update.message.text)), ParseMode.MARKDOWN)
     
 def add_record(update, context):
-    context.bot.send_message(update.effective_chat.id, 'Введите номер записи(id), фамилию, имя, отчество, номер телефона: ')
+    context.bot.send_message(update.effective_chat.id, 'Через пробел введите номер записи(id), фамилию, имя, отчество, номер телефона: ')
     return 1
 
 def add_record_output(update, context):
     update.message.reply_text(f'Добавлена запись: {update.message.text}', model.add_record(update.message.text))
+
+def delete_record(update, context):
+    context.bot.send_message(update.effective_chat.id, 'Введите номер записи, которую вы хотите удалить: ')
+    return 1
+
+def delete_record_output(update, context):
+    update.message.reply_text(f'Запись {update.message.text} удалена', model.delete_record(update.message.text))
 
 
 
@@ -59,7 +66,7 @@ def stop(update, context):
 show_all_handler = ConversationHandler(
         
         
-        entry_points=[CommandHandler('show_all', show_all)],
+        entry_points=[CommandHandler('show', show_all)],
         states={
             1: [MessageHandler(Filters.text & ~Filters.command, find_by_surname_output)],
             
@@ -70,7 +77,7 @@ show_all_handler = ConversationHandler(
 find_by_surname_handler = ConversationHandler(
         
         
-        entry_points=[CommandHandler('find_by_surname', find_by_surname)],
+        entry_points=[CommandHandler('find', find_by_surname)],
         states={
             1: [MessageHandler(Filters.text & ~Filters.command, find_by_surname_output)],
             
@@ -81,9 +88,20 @@ find_by_surname_handler = ConversationHandler(
 add_record_handler = ConversationHandler(
         
         
-        entry_points=[CommandHandler('add_record', add_record)],
+        entry_points=[CommandHandler('add', add_record)],
         states={
             1: [MessageHandler(Filters.text & ~Filters.command, add_record_output)],
+            
+        },
+        fallbacks=[CommandHandler('stop', stop)]
+    )
+
+delete_record_handler = ConversationHandler(
+        
+        
+        entry_points=[CommandHandler('delete', delete_record)],
+        states={
+            1: [MessageHandler(Filters.text & ~Filters.command, delete_record_output)],
             
         },
         fallbacks=[CommandHandler('stop', stop)]
@@ -100,6 +118,7 @@ dispatcher.add_handler(start_handler)
 dispatcher.add_handler(show_all_handler)
 dispatcher.add_handler(find_by_surname_handler)
 dispatcher.add_handler(add_record_handler)
+dispatcher.add_handler(delete_record_handler)
 
 updater.start_polling()
 updater.idle()

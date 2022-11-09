@@ -1,14 +1,14 @@
 # https://habr.com/ru/post/321510/
 
-import sqlite3
+# import sqlite3
 
-conn = sqlite3.connect('phonebook.db')
-cursor = conn.cursor()
+# conn = sqlite3.connect('phonebook.db')
+# cursor = conn.cursor()
 
 # показать всех студентов
-cursor.execute("select * from phonebook")
-results = cursor.fetchall()
-print(results)
+# cursor.execute("select * from phonebook")
+# results = cursor.fetchall()
+# print(results)
 
 # поиск записи
 # surname = 'Мухина'
