@@ -11,32 +11,33 @@ results = cursor.fetchall()
 print(results)
 
 # поиск записи
-# surname = 'Иванов'
-# cursor.execute(f"select * from students where surname like '%{surname}%'")
+# surname = 'Мухина'
+# cursor.execute(f"select * from phonebook where surname like '%{surname}%'")
 # results = cursor.fetchall()
 # print(results)
 
 # добавить студента
+# id = 9
 # name = 'Степан'
 # surname = 'Степанов'
-# phone = 45648
-# description = 'Инженер'
+# petronimic = 'Александрович'
+# phone_number = +79456785432
 # cursor.execute(
-#     f"insert into students (name, surname, phone, description) "
-#     f"values ('{name}', '{surname}', {phone}, '{description}')")
+#     f"insert into phonebook (id, surname, name, petronimic, phone_number) "
+#     f"values ('{id}', '{surname}', '{name}','{petronimic}', '{phone_number}')")
 # conn.commit()
 
 # удалить студента
-# id = 5
+# id = 9
 # cursor.execute(
-#     f"delete from students where id={id}"
+#     f"delete from phonebook where id={id}"
 # )
 # conn.commit()
 
 # обновить данные о студенте
-# id = 3
-# cursor.execute(
-#     f"update students set name='Юрий' where id={id}"
-# )
+id = 9
+cursor.execute(
+    f"update phonebook set name='Юрий' where id={id}"
+)
 conn.commit()
 conn.close()
