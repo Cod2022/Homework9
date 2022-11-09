@@ -20,4 +20,9 @@ def find_by_surname(surname):
     cursor = conn.cursor()
     cursor.execute(f"select * from phonebook where surname like '%{surname}%'")
     results = cursor.fetchall()
+    #results2 = []
+    # for i in results:
+    #     i = str(i)
+    #     results2.append(i)
     print(results)
+    return results

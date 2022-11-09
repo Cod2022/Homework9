@@ -33,10 +33,14 @@ def start(update, context):
 
 def show_all(update, context):
     context.bot.send_message(update.effective_chat.id, '{}'.format(model.show_all()))
+
+def find_by_surname(update, context):
+    context.bot.send_message(update.effective_chat.id, 'Введите фамилию для поиска: ')
     return 1
 
-def convert_output(update, context):
-    update.message.reply_text(f'{update.message.text} кг = {int(update.message.text) * 1000} гр')
+def find_by_surname_output(update, context):
+    update.message.reply_text('{}'.format(model.find_by_surname(update.message.text)), ParseMode.MARKDOWN)
+    
 
 
 
@@ -51,7 +55,18 @@ show_all_handler = ConversationHandler(
         
         entry_points=[CommandHandler('show_all', show_all)],
         states={
-            1: [MessageHandler(Filters.text & ~Filters.command, convert_output)],
+            1: [MessageHandler(Filters.text & ~Filters.command, find_by_surname_output)],
+            
+        },
+        fallbacks=[CommandHandler('stop', stop)]
+    )
+
+find_by_surname_handler = ConversationHandler(
+        
+        
+        entry_points=[CommandHandler('find_by_surname', find_by_surname)],
+        states={
+            1: [MessageHandler(Filters.text & ~Filters.command, find_by_surname_output)],
             
         },
         fallbacks=[CommandHandler('stop', stop)]
@@ -66,6 +81,7 @@ start_handler = CommandHandler('start', start)
 
 dispatcher.add_handler(start_handler)
 dispatcher.add_handler(show_all_handler)
+dispatcher.add_handler(find_by_surname_handler)
 
 updater.start_polling()
 updater.idle()
