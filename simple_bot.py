@@ -1,8 +1,10 @@
-from random import randint
 
-from telegram import Bot, Update
+from telegram import Bot, Update, ParseMode
 from telegram.ext import CommandHandler, MessageHandler, Updater, ConversationHandler, Filters
+
+import sqlite3
 import model
+
 
 bot_token = '5544320586:AAFaJ_z5clFBK6vVeUwpR0suqBeUOj84G8g'
 bot = Bot(bot_token)
@@ -15,12 +17,21 @@ dispatcher = updater.dispatcher
 # Dispatсher - отвечает за вызов обработчика сообщений
 # Handlers - обработчики сообщений
 
+# def show_all():
+#     conn = sqlite3.connect('phonebook.db')
+#     cursor = conn.cursor()
+#     cursor.execute("select * from phonebook")
+#     results = cursor.fetchall()
+#     for i in results:
+#         print(i)
+#     return results
+
 
 def start(update, context):
-    context.bot.send_message(update.effective_chat.id, f"Привет! Это телефонный справичник\n Выберите: \n Показать всех /convert \n")
+    context.bot.send_message(update.effective_chat.id, f"Привет! Это телефонный справочник\n Выберите: \n Показать всех /show_all \n")
 
-def convert(update, context):
-    context.bot.send_message(update.effective_chat.id, "Введите количество килограммов, \n или нажмите /stop для выхода из бота ")
+def show_all(update, context):
+    context.bot.send_message(update.effective_chat.id, '{}'.format(model.show_all()))
     return 1
 
 def convert_output(update, context):
@@ -37,7 +48,7 @@ def stop(update, context):
 convert_handler = ConversationHandler(
         
         
-        entry_points=[CommandHandler('convert', convert)],
+        entry_points=[CommandHandler('show_all', show_all)],
         states={
             1: [MessageHandler(Filters.text & ~Filters.command, convert_output)],
             
