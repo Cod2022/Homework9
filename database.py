@@ -35,9 +35,9 @@ print(results)
 # conn.commit()
 
 # обновить данные о студенте
-id = 9
-cursor.execute(
-    f"update phonebook set name='Юрий' where id={id}"
-)
-conn.commit()
-conn.close()
+# id = 9
+# cursor.execute(
+#     f"update phonebook set name='Юрий' where id={id}"
+# )
+# conn.commit()
+# conn.close()
